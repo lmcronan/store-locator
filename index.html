@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Map Example</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="../assets/css/storelocator.css" />
+	<link rel="stylesheet" type="text/css" href="../assets/css/storelocator2.css" />
+</head>
+
+<body>
+
+<div class="bh-sl-container ">
+	<div id="page-header">
+		<h2 class="title">Find A Dealer</h2>
+	</div>
+
+	<div id="bh-sl-map-container" class="bh-sl-map-container">
+		<div class="bh-sl-form-container">
+			<p class="small-header line-break">Dealer Locator</p>
+			<form id="bh-sl-user-location" method="post" action="#">
+				<div class="form-row1">
+					<div class="search-filter">
+						<div class="form-input">
+							<label for="bh-sl-address">Enter Address or Zip Code:</label>
+							<input type="text" id="bh-sl-address" name="bh-sl-address" />
+						</div>
+						<div class="input-distance">
+							<p class="input-label">Within:</p>
+							<select id="bh-sl-maxdistance" name="bh-sl-maxdistance">
+								<option value="10">10 miles</option>
+								<option value="25">25 miles</option>
+								<option value="50">50 miles</option>
+								<option value="100">100 miles</option>
+							</select>
+						</div>
+					</div>
+					<div class="input-search">
+						<button id="bh-sl-submit" type="submit">Search</button>
+					</div>
+				</div>
+
+				<!-- filter panel -->
+				<!-- <div class="bh-sl-filters-container">
+					<ul id="category-filters-container2" class="bh-sl-filters">
+						<li><label><input type="checkbox" name="feature" value="product1"> Product 1 </label></li>
+						<li><label><input type="checkbox" name="feature" value="product2"> Product 2 </label></li>
+						<li><label><input type="checkbox" name="feature" value="product3"> Product 3 </label></li>
+					</ul>
+				</div> -->
+
+			</form>
+		</div>
+		
+		<div class="bh-sl-loc-list">			
+			<p class="small-header featured-loc-header show-featured-title">Featured Location</p>
+			<p class="small-header normal-loc-header show-result line-break">Showing <span class="bh-sl-total-results"></span> nearest locations to "<span class="bh-sl-results-location"></span>"</p>
+			<ul class="list"></ul>
+		</div>
+
+		<!-- <div class="map-container"> -->
+			<div class="location-info">
+				<p class="small-header line-break">Location Information</p>
+				<div class="legend-icon-wrapper">
+					<div class="master-dealer-legend">
+						<img src="../assets/img/master-dealer-icon.png">
+						<p class="icon-label">Fire Magic Master Dealer</p>        
+					</div>
+					<div class="dealer-legend">
+						<img src="../assets/img/normal-dealer-icon.png">
+						<p class="icon-label">Fire Magic Dealer</p>        
+						</div>
+					   
+					<div class="service-center-legend">
+							<img src="../assets/img/service-center-icon.png">
+							<p class="icon-label">Fire Magic Service Center</p>        
+						</div> 
+					</div> 
+				</div>  
+			<div class="map-cont">
+				<div id="bh-sl-map" class="bh-sl-map"></div>
+			</div>
+		<!-- </div>	 -->
+		<div class="disclaimer">/* text disclaimer */</div>		
+	</div>	
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="../assets/js/libs/handlebars.min.js"></script>
+<script src="../assets/js/plugins/storeLocator/customhandlebars.js"></script>
+<script src="https://maps.google.com/maps/api/js?key=AIzaSyCPgJ1GXH5EIinW1WaXeWWNai_mwRBT3Fs&libraries=places"></script>
+<script src="../assets/js/plugins/storeLocator/jquery.storelocator.js"></script>
+<script>
+	$(function() {
+		var showResult = $('.show-result');
+		var detachEl = showResult.detach();
+		
+		function detachable() {
+			if( $('.featured-locations').length ) {
+				$('.show-featured-title').css("display", "block");
+				detachEl.appendTo('.bh-sl-loc-list ul.list li.featured').find('.show-result-inner');
+			} else {
+				$('.show-featured-title').css("display", "none");
+				detachEl.prependTo('.bh-sl-loc-list ul.list li:first-child').find('.show-result-inner');
+				$(".bh-sl-container .bh-sl-loc-list .list-details:first-of-type").css("padding-top", "10px");
+			}
+
+			$(".show-result").css("display", "none");
+			$(".show-result:last").css({"display": "block", "padding-top": "15px"});
+			$(".show-result:first").css("padding-top", "0px");
+
+			if( $('.bh-sl-noresults-title').length ) {
+				$(".show-result").css("display", "none");
+			} 
+		}
+
+		$('#bh-sl-map-container').storeLocator({
+			'distanceAlert' : 1500,
+			'fullMapStartBlank' : 3,
+			'slideMap' : false,
+			'defaultLoc' : true,
+			'defaultLat' : 43.9695148,
+			'defaultLng' : -99.9018131,
+			'querystringParams' : true,
+			'fullMapStart': true,
+			'autoComplete': true,
+			'featuredLocations' : true,
+			'maxDistance': true,
+			'catMarkers' : {
+				'B' : ['../assets/img/normal-dealer-pin.png', 31, 50],
+				'A' : ['../assets/img/master-dealer-pin.png', 31, 50]
+			},
+			taxonomyFilters : {
+				'category' : 'category-filters-container1',
+				'features' : 'category-filters-container2',
+				'city' : 'city-filter',
+				'postal': 'postal-filter'
+			},
+
+			// The following paths are set because this example is in a subdirectory
+			'dataLocation': '../data/locations.json',
+			'infowindowTemplatePath': '../assets/js/plugins/storeLocator/templates/infowindow-description.html',
+			'listTemplatePath': '../assets/js/plugins/storeLocator/templates/location-list-description.html',
+			// 'callbackBeforeSend': function(){
+			 
+			// },
+
+			'callbackMapSet': function () {
+				var d = setInterval(detachable, 0);
+				setTimeout(function(){
+			 	 clearInterval(d);
+				},0);
+			}
+		});		
+	});
+</script>
+
+
+<!--<script>
+$(function() {
+    var height = $(".map-container").height();    
+    $(".bh-sl-loc-list").css("height", height);
+});
+
+(function($) {
+	function mediaSize() { 
+		/* Set the matchMedia */
+		if (window.matchMedia('(min-width: 768px)').matches) {
+			$(".bh-sl-loc-list").css("height", "unset");
+		} else {
+			var height = $(".map-container").height();    
+    		$(".bh-sl-loc-list").css("height", height);
+		}
+	};
+	
+	/* Call the function */
+  mediaSize();
+  /* Attach the function to the resize event listener */
+	window.addEventListener('resize', mediaSize, false);  	
+})(jQuery);
+
+</script>-->
+
+</body>
+</html>

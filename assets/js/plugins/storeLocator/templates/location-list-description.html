@@ -1,0 +1,86 @@
+{{#location}}
+{{#if featured}}
+<li data-markerid="{{markerid}}" style="padding: 0; border: 0;" class="featured">
+	<div class="featured-locations">
+		<div class="list-label">{{marker}}</div>
+		<div class="list-details">
+			<table class="list-content">
+				<td class="featured-img-td"><img class="featured-img" src="../assets/img/master-dealer.png"></td>
+				<td class="store-info">						
+					<div class="loc-name">{{name}}
+					{{#if service-center}}
+						<div class="loc-wrench">
+							<img src="../assets/img/service-center-icon.png">
+						</div>
+					{{/if}}
+					</div>
+					<div class="loc-addr">{{address}}</div>
+					{{#if address2}}
+						<div class="loc-addr2">{{address2}}</div>
+					{{/if}}
+					<div class="loc-addr3">{{city}}{{#if city}},{{/if}} {{state}} {{postal}}</div>
+					{{#if phone}}
+						<div class="loc-phone">Phone: {{phone}}</div>
+					{{/if}}
+				</td>
+				<td class="store-links">
+					{{#if distance}}
+						<div class="loc-dist loc-default-dist">({{distance}} {{length}})</div>
+						{{#if altdistance}}<div class="loc-dist loc-alt-dist">{{altdistance}} {{altlength}}</div>{{/if}}
+						<br><div class="loc-directions"><a href="https://maps.google.com/maps?saddr={{origin}}&amp;daddr={{address}} {{address2}} {{city}}, {{state}} {{postal}}" target="_blank">Directions</a></div>
+					{{/if}}
+					{{#if web}}
+						<div class="loc-web"><a href="{{web}}" target="_blank">Website</a></div>
+					{{/if}}
+					{{#if email}}
+						<div class="loc-email"><a href="mailto:{{email}}" target="_blank">Email</a></div>
+					{{/if}}
+				</td>			
+			</table>
+		</div>
+	</div>
+	<div class="show-result-inner"></div>
+</li>	
+{{else}}
+<li data-markerid="{{markerid}}" >
+	<div class="list-label">{{marker}}</div>
+	<div class="list-details">
+		<table class="list-content">
+			<td class="store-info">
+				<div class="loc-name">{{name}}</div>
+				{{#if service-center}}
+					<div class="loc-wrench">
+						<img src="../assets/img/service-center-icon.png">
+					</div>
+				{{/if}}
+				<div class="loc-addr">{{address}}</div>
+				{{#if address2}}
+					<div class="loc-addr2">{{address2}}</div>
+				{{/if}}
+				<div class="loc-addr3">{{city}}{{#if city}},{{/if}} {{state}} {{postal}}</div>
+				{{#if phone}}
+					<div class="loc-phone">{{phone}}</div>
+				{{/if}}
+			</td>
+			<td class="store-links">
+				{{#if distance}}
+					<div class="loc-dist loc-default-dist">({{distance}} {{length}})</div>
+					{{#if altdistance}}<div class="loc-dist loc-alt-dist">{{altdistance}} {{altlength}}</div>{{/if}}
+					<br><div class="loc-directions"><a href="https://maps.google.com/maps?saddr={{origin}}&amp;daddr={{address}} {{address2}} {{city}}, {{state}} {{postal}}" target="_blank">Directions</a></div>
+				{{/if}}
+				{{#if web}}
+					<div class="loc-web"><a href="{{web}}" target="_blank">Website</a></div>
+				{{/if}}
+				{{#if email}}
+					<div class="loc-email"><a href="mailto:{{email}}" target="_blank">Email</a></div>
+				{{/if}}
+			</td>			
+		</table>
+	</div>
+</li>
+{{/if}}
+{{/location}}
+
+
+	
+
