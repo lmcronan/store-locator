@@ -4,8 +4,8 @@
 	<title>Map Example</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="/assets/css/storelocator.css" />
-	<link rel="stylesheet" type="text/css" href="/assets/css/storelocator2.css" />
+	<link rel="stylesheet" type="text/css" href="assets/css/storelocator.css" />
+	<link rel="stylesheet" type="text/css" href="assets/css/storelocator2.css" />
 </head>
 
 <body>
@@ -126,8 +126,8 @@
 			'featuredLocations' : true,
 			'maxDistance': true,
 			'catMarkers' : {
-				'B' : ['../assets/img/normal-dealer-pin.png', 31, 50],
-				'A' : ['../assets/img/master-dealer-pin.png', 31, 50]
+				'B' : ['/assets/img/normal-dealer-pin.png', 31, 50],
+				'A' : ['/assets/img/master-dealer-pin.png', 31, 50]
 			},
 			taxonomyFilters : {
 				'category' : 'category-filters-container1',
@@ -137,7 +137,7 @@
 			},
 
 			// The following paths are set because this example is in a subdirectory
-			'dataLocation': '../data/locations.json',
+			'dataLocation': '/data/locations.json',
 			'infowindowTemplatePath': '/assets/js/plugins/storeLocator/templates/infowindow-description.html',
 			'listTemplatePath': '/assets/js/plugins/storeLocator/templates/location-list-description.html',
 			// 'callbackBeforeSend': function(){
