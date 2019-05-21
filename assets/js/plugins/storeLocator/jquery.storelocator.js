@@ -53,7 +53,7 @@
 		'locationsPerPage'           : 10,
 		'mapSettings'                : {
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
-			zoom     : 10
+			zoom     : 11
 		},
 		'markerCluster'              : null,
 		'markerImg'                  : null,
