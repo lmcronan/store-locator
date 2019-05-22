@@ -368,11 +368,11 @@ body {
     padding-left: 20px;
 }
 
-.featured-loc-header { display: block; }
+/* .featured-loc-header { display: block; }
 .featured-loc-header ~ .featured-loc-header { display: none;} 
 
 .normal-loc-header { display: block; }
-.normal-loc-header ~ .normal-loc-header { display: none;} 
+.normal-loc-header ~ .normal-loc-header { display: none;}  */
 
 .show-featured-title {
     display: none;

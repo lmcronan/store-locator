@@ -19,7 +19,7 @@
     "features": "product1, product2",
     "date": "10/17/18",
     "email": "testemail@gmail.com",
-    "service-center": "yes"
+    "service-center": "true"
   },
   {
     "id": "2",
@@ -37,7 +37,7 @@
     "hours1": "Mon-Sun 11am-10pm",
     "hours2": "",
     "hours3": "",
-    "featured": "",
+    "featured": "true",
     "features": "product2",
     "date": "09/17/18",
     "service-center": ""
@@ -82,7 +82,7 @@
     "featured": "",
     "features": "product1",
     "date": "07/17/18",
-    "service-center": "yes"
+    "service-center": "true"
   },
   {
     "id": "5",
@@ -103,7 +103,7 @@
     "featured": "",
     "features": "product2",
     "date": "06/17/18",
-    "service-center": "yes"
+    "service-center": "true"
   },
   {
     "id": "6",

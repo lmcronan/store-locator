@@ -38,7 +38,6 @@
 						<button id="bh-sl-submit" type="submit">Search</button>
 					</div>
 				</div>
-
 				<!-- filter panel -->
 				<!-- <div class="bh-sl-filters-container">
 					<ul id="category-filters-container2" class="bh-sl-filters">
@@ -47,7 +46,6 @@
 						<li><label><input type="checkbox" name="feature" value="product3"> Product 3 </label></li>
 					</ul>
 				</div> -->
-
 			</form>
 		</div>
 		
@@ -56,58 +54,45 @@
 			<p class="small-header normal-loc-header show-result line-break">Showing <span class="bh-sl-total-results"> </span> nearest locations to "<span class="bh-sl-results-location"> </span>"</p>
 			<ul class="list"></ul>
 		</div>
-
-		<!-- <div class="map-container"> -->
-			<div class="location-info">
-				<p class="small-header line-break">Location Information</p>
-				<div class="legend-icon-wrapper">
-					<div class="master-dealer-legend">
-						<img src="assets/img/master-dealer-icon.png">
-						<p class="icon-label">Fire Magic Master Dealer</p>        
-					</div>
-					<div class="dealer-legend">
-						<img src="assets/img/dealer-icon.png">
-						<p class="icon-label">Fire Magic Dealer</p>        
-						</div>
-					   
-					<div class="service-center-legend">
-						<img src="assets/img/service-center-icon.png">
-						<p class="icon-label">Fire Magic Service Center</p>        
-					</div> 
+		
+		<div class="location-info">
+			<p class="small-header line-break">Location Information</p>
+			<div class="legend-icon-wrapper">
+				<div class="master-dealer-legend">
+					<img src="assets/img/master-dealer-icon.png">
+					<p class="icon-label">Fire Magic Master Dealer</p>        
+				</div>
+				<div class="dealer-legend">
+					<img src="assets/img/dealer-icon.png">
+					<p class="icon-label">Fire Magic Dealer</p>        
+				</div>			   
+				<div class="service-center-legend">
+					<img src="assets/img/service-center-icon.png">
+					<p class="icon-label">Fire Magic Service Center</p>        
 				</div> 
-			</div>  
-			<div class="map-cont">
-				<div id="bh-sl-map" class="bh-sl-map"></div>
-			</div>
-		<!-- </div>	 -->
-		<div class="disclaimer">/* text disclaimer */</div>		
+			</div> 
+		</div>
+
+		<div class="map-cont">
+			<div id="bh-sl-map" class="bh-sl-map"></div>
+		</div>		
+		
+		<div class="disclaimer"> </div>		
 	</div>	
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="assets/js/libs/handlebars.min.js"></script>
 <script src="https://maps.google.com/maps/api/js?key=AIzaSyCPgJ1GXH5EIinW1WaXeWWNai_mwRBT3Fs&libraries=places"></script>
 <script src="assets/js/plugins/storeLocator/jquery.storelocator.js"></script>
-
-
-
 <script>
+	
 	$(function() {
 		var showResult = $('.show-result');
-		var detachEl = showResult.detach();
-		
-		function detachable() {
-			if( $('.featured-locations').length ) {
-				$('.show-featured-title').css("display", "block");
-				detachEl.appendTo('.bh-sl-loc-list ul.list li.featured').find('.show-result-inner');
-			} else {
-				$('.show-featured-title').css("display", "none");
-				detachEl.prependTo('.bh-sl-loc-list ul.list li:first-child').find('.show-result-inner');
-				$(".bh-sl-container .bh-sl-loc-list .list-details:first-of-type").css("padding-top", "10px");
-			}
 
-			$(".show-result").css("display", "none");
-			$(".show-result:last").css({"display": "block", "padding-top": "15px"});
-			$(".show-result:first").css("padding-top", "0px");		
+		function noResult() {
+			if( $('.bh-sl-noresults-title').length )  {								
+				alert("no result");
+			}
 		}
 
 		$('#bh-sl-map-container').storeLocator({
@@ -125,6 +110,7 @@
 			'catMarkers' : {
 				'B' : ['assets/img/dealer-pin.png', 30, 49],
 				'A' : ['assets/img/master-dealer-pin.png', 30, 50]
+				//'SC' : ['assets/img/service-center-pin.png', 30, 50]
 			},
 			taxonomyFilters : {
 				'category' : 'category-filters-container1',
@@ -137,46 +123,41 @@
 			'dataLocation': 'data/locations.json',
 			'infowindowTemplatePath': 'assets/js/plugins/storeLocator/templates/infowindow-description.html',
 			'listTemplatePath': 'assets/js/plugins/storeLocator/templates/location-list-description.html',
-			'callbackNoResults': function(){
-				$(".show-result").css("display", "none");
-				$('.show-featured-title').css("display", "none");
-			},
 
-			'callbackMapSet': function () {
-				var d = setInterval(detachable, 10);
+			'callbackMapSet': function () {							
+				var detachEl = showResult.detach();
+				
+				function detachable() {
+					if( $('.featured-locations').length ) {
+						$('.show-featured-title').css("display", "block");
+						detachEl.appendTo('.bh-sl-loc-list ul.list li.featured').find('.show-result-inner');
+					} else {
+						$('.show-featured-title').css("display", "none");
+						detachEl.prependTo('.bh-sl-loc-list ul.list li:first-child').find('.show-result-inner');
+						$(".bh-sl-container .bh-sl-loc-list .list-details:first-of-type").css("padding-top", "10px");
+					}
+
+					$(".show-result").css("display", "none");
+					$(".show-result:last").css({"display": "block", "padding-top": "15px"});
+					$(".show-result:first").css("padding-top", "0px");		
+				}
+
+				var d = setInterval(detachable, 100);
 				setTimeout(function(){
 			 	 clearInterval(d);
 				},100);
+			}, 
+
+			'callbackNoResults': function(){
+				$(".show-result").css("display", "none");		
+			 	$('.show-featured-title').css("display", "none");
+				// var w = setInterval(noResult, 10);
+				// 	setTimeout(function(){
+				// 	clearInterval(w);
+				// },100);
 			}
 		});		
 	});
 </script>
-
-
-<!--<script>
-$(function() {
-    var height = $(".map-container").height();    
-    $(".bh-sl-loc-list").css("height", height);
-});
-
-(function($) {
-	function mediaSize() { 
-		/* Set the matchMedia */
-		if (window.matchMedia('(min-width: 768px)').matches) {
-			$(".bh-sl-loc-list").css("height", "unset");
-		} else {
-			var height = $(".map-container").height();    
-    		$(".bh-sl-loc-list").css("height", height);
-		}
-	};
-	
-	/* Call the function */
-  mediaSize();
-  /* Attach the function to the resize event listener */
-	window.addEventListener('resize', mediaSize, false);  	
-})(jQuery);
-
-</script>-->
-
 </body>
 </html>

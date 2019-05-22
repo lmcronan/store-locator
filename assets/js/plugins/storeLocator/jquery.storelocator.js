@@ -1735,7 +1735,7 @@
 			if (addressInput === '' && searchInput === '' && this.settings.autoGeocode !== true) {
 				// this._start();
 				_this.emptyResult();
-				$(".show-featured-title").css("display", "none");
+				//$(".show-featured-title").css("display", "none");
 			}
 			else if (addressInput !== '') {
 
@@ -2518,7 +2518,8 @@
 			$resultsContainer.text(locCount - featuredset.length);
 			
 			$('.bh-sl-results-location').text($('#bh-sl-address').val());
-			
+			alert("print val");
+			console.log(locCount-featuredset.length + " " + $("#bh-sl-address").val());			
 		},
 
 		/**
@@ -2883,8 +2884,10 @@
 				storeStart = 0;
 			}
 
+			alert("processdata1");
 			// Output location results count
 			_this.resultsTotalCount(locationset.length);
+			alert("processdata2");
 
 			// Google maps settings
 			if ((_this.settings.fullMapStart === true && firstRun === true && _this.settings.querystringParams !== true) || (_this.settings.mapSettings.zoom === 0) || (typeof origin === 'undefined') || (distError === true)) {
@@ -2929,6 +2932,8 @@
 
 			// Load the map
 			$this.data(_this.settings.mapID.replace('#', ''), _this.map);
+
+			_this.resultsTotalCount(locationset.length);
 
 			// Map set callback.
 			if (_this.settings.callbackMapSet) {
